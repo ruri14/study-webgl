@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "pug": "^3.0.2",
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.56.1"
+  },
+  "scripts": {
+    "watch": "npm run watch:sass & npm run watch:pug",
+    "watch:sass": "sass --watch scss/:assets/css/",
+    "watch:pug": "pug pug/ --out ./ --watch --pretty"
+  }
+}

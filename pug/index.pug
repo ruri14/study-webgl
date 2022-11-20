@@ -1,0 +1,18 @@
+extend _layout.pug
+
+append pagedata
+  - var cate = ""
+  - var title = ""
+  - var metadescription = ""
+
+append pagecss
+  link(rel='stylesheet' href="./assets/css/top.css")
+  link(rel='stylesheet' href="./assets/css/top.css")
+
+append pagejs
+  script(src="./assets/js/script.js")
+
+block main
+  main
+    include _task01
+

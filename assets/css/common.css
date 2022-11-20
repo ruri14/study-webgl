@@ -1,0 +1,13 @@
+html {
+  background-color: #fff;
+}
+
+.taskContainer {
+  width: 100%;
+  height: 100vh;
+}
+.taskContainer--01 {
+  background-color: azure;
+}
+
+/*# sourceMappingURL=common.css.map */
