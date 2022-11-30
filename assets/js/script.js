@@ -20,6 +20,8 @@ class App3 {
     this.controls;
     this.render = this.render.bind(this);
     this.shadowHelper;
+    this.gridHelper;
+    this.cameraHelper;
 
     // boxes
     this.geometory;
@@ -34,7 +36,7 @@ class App3 {
   }
   static get RENDERER_PARAM() {
     return {
-      clearColor: 0xFFEEAD,
+      clearColor: 0xFCF9BE,
       width: window.innerWidth,
       height: window.innerHeight,
     };
@@ -42,35 +44,38 @@ class App3 {
   static get CAMERA_PARAM() {
     return {
       perspective: {
-        fov: 50, // 視野角
+        fov: 30,
         aspect: window.innerWidth / window.innerHeight,
         near: 0.1,
-        far: 2000.0,
+        far: 1000,
+        x: 10,
+        y: 20,
+        z: 60,
       },
       orthographic: {
-        left: window.innerWidth / - 2,
-        right: window.innerWidth / 2,
-        top: window.innerHeight / 2,
-        bottom: window.innerHeight / - 2,
+        left: -20,
+        right: 20,
+        top: 20,
+        bottom: -20,
         near: 0.1,
         far: 1000,
+        x: 10,
+        y: 20,
+        z: 60,
       },
-      x: 3,
-      y: 10,
-      z: 30,
       lookAt: new THREE.Vector3(0.0, 0.0, 0.0),
     }
   }
   static get FLOOR_GEOMETORY_PARAM() {
     return {
-      x: 10000,
+      x: 1000,
       y: 1,
-      z: 10000,
+      z: 1000,
     }
   }
   static get FLOOR_MATERIAL_PARAM() {
     return {
-      color: 0xFFEEAD,
+      color: 0xFFFFFF,
     }
   }
   static get BOX_GEOMETORY_PARAM() {
@@ -82,7 +87,7 @@ class App3 {
   }
   static get BOX_MATERIAL_PARAM() {
     return {
-      color: 0xFFAD60,
+      color: 0x87CEEB,
     }
   }
   static get DIRECTIONAL_LIGHT_PARAM() {
@@ -126,24 +131,29 @@ class App3 {
 
     this.scene = new THREE.Scene();
 
-    this.camera = new THREE.PerspectiveCamera(
-      App3.CAMERA_PARAM.perspective.fov,
-      App3.CAMERA_PARAM.perspective.aspect,
-      App3.CAMERA_PARAM.perspective.near,
-      App3.CAMERA_PARAM.perspective.far,
-    );
-    // this.camera = new THREE.OrthographicCamera(
-    //   App3.CAMERA_PARAM.orthographic.left,
-    //   App3.CAMERA_PARAM.orthographic.right,
-    //   App3.CAMERA_PARAM.orthographic.top,
-    //   App3.CAMERA_PARAM.orthographic.bottom,
-    //   App3.CAMERA_PARAM.orthographic.near,
-    //   App3.CAMERA_PARAM.orthographic.far,
+    // this.camera = new THREE.PerspectiveCamera(
+    //   App3.CAMERA_PARAM.perspective.fov,
+    //   App3.CAMERA_PARAM.perspective.aspect,
+    //   App3.CAMERA_PARAM.perspective.near,
+    //   App3.CAMERA_PARAM.perspective.far,
     // );
+    // this.camera.position.set(
+    //   App3.CAMERA_PARAM.perspective.x,
+    //   App3.CAMERA_PARAM.perspective.y,
+    //   App3.CAMERA_PARAM.perspective.z,
+    // );
+    this.camera = new THREE.OrthographicCamera(
+      App3.CAMERA_PARAM.orthographic.left,
+      App3.CAMERA_PARAM.orthographic.right,
+      App3.CAMERA_PARAM.orthographic.top,
+      App3.CAMERA_PARAM.orthographic.bottom,
+      App3.CAMERA_PARAM.orthographic.near,
+      App3.CAMERA_PARAM.orthographic.far,
+    );
     this.camera.position.set(
-      App3.CAMERA_PARAM.x,
-      App3.CAMERA_PARAM.y,
-      App3.CAMERA_PARAM.z,
+      App3.CAMERA_PARAM.orthographic.x,
+      App3.CAMERA_PARAM.orthographic.y,
+      App3.CAMERA_PARAM.orthographic.z,
     );
     this.camera.lookAt(App3.CAMERA_PARAM.lookAt);
     this.scene.add(this.camera);
@@ -158,7 +168,7 @@ class App3 {
     this.floor = new THREE.Mesh(this.floorGeometory, this.floorMaterial);
     this.floor.position.set(
       0,
-      App3.FLOOR_GEOMETORY_PARAM.y / 2 - 1,
+      App3.FLOOR_GEOMETORY_PARAM.y / -2,
       0,
     );
     this.floor.receiveShadow = true;
@@ -180,9 +190,6 @@ class App3 {
     // this.boxAxis = new THREE.AxesHelper(20);
     // this.box.add(this.boxAxis);
     this.scene.add(this.box);
-
-    this.axesHelper = new THREE.AxesHelper(100);
-    this.scene.add(this.axesHelper);
 
     this.directionalLight = new THREE.DirectionalLight(
       App3.DIRECTIONAL_LIGHT_PARAM.color,
@@ -214,8 +221,17 @@ class App3 {
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
-    this.shadowHelper = new THREE.CameraHelper(this.directionalLight.shadow.camera);
-    this.scene.add(this.shadowHelper);
+    // this.shadowHelper = new THREE.CameraHelper(this.directionalLight.shadow.camera);
+    // this.scene.add(this.shadowHelper);
+
+    this.axesHelper = new THREE.AxesHelper(100);
+    this.scene.add(this.axesHelper);
+
+    this.gridHelper = new THREE.GridHelper(App3.FLOOR_GEOMETORY_PARAM.x, App3.FLOOR_GEOMETORY_PARAM.x / 10);
+    this.scene.add(this.gridHelper);
+
+    this.cameraHelper = new THREE.CameraHelper(this.camera);
+    this.scene.add(this.cameraHelper);
   }
 
   render() {

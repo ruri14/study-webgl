@@ -1,13 +1,9 @@
-html {
-  background-color: #fff;
-}
-
-.taskContainer {
+.container {
   width: 100%;
   height: 100vh;
 }
-.taskContainer--01 {
-  background-color: #ffeead;
+.container--01 {
+  background-color: #fff;
 }
 
 /*# sourceMappingURL=common.css.map */
