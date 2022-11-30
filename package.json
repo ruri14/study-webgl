@@ -9,5 +9,8 @@
     "watch": "npm run watch:sass & npm run watch:pug",
     "watch:sass": "sass --watch scss/:assets/css/",
     "watch:pug": "pug pug/ --out ./ --watch --pretty"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^18.6.4"
   }
 }

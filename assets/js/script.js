@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import * as TWEEN from './lib/tween.esm.js';
+import * as TWEEN from '@tweenjs/tween.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   const app = new App3();
