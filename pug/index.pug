@@ -8,8 +8,15 @@ append pagedata
 append pagecss
 
 append pagejs
+  script(async src="https://ga.jspm.io/npm:es-module-shims@1.4.6/dist/es-module-shims.js")
+  script(type="importmap").
+    {
+      "imports": {
+        "three": "./node_modules/three/build/three.module.js",
+        "three/addons/": "./node_modules/three/examples/jsm/"
+      }
+    }
   script(src="./assets/js/script.js" type="module")
-
 block main
   main
     include _task01

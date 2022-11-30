@@ -2,7 +2,8 @@
   "devDependencies": {
     "pug": "^3.0.2",
     "pug-cli": "^1.0.0-alpha6",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "three": "^0.146.0"
   },
   "scripts": {
     "watch": "npm run watch:sass & npm run watch:pug",
