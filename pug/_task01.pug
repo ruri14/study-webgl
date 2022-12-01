@@ -1,2 +1,9 @@
 .container.container--01
   #webgl
+  .controlPanel
+    .camera
+      span.name Camera:
+      input(type="radio" name="camera" id="perspective" value="0" checked)
+      label(for="perspective") PERSPECTIVE
+      input(type="radio" name="camera" id="orthographic" value="1")
+      label(for="orthographic") ORTHOGRAPHIC

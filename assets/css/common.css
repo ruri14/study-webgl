@@ -1,9 +1,51 @@
 .container {
+  position: relative;
   width: 100%;
   height: 100vh;
 }
 .container--01 {
   background-color: #fff;
+}
+
+.controlPanel {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 430px;
+  padding: 20px;
+  background: #fff;
+}
+.controlPanel .name {
+  display: block;
+  float: left;
+  margin-right: 0.5em;
+  line-height: 30px;
+}
+.controlPanel input {
+  display: none;
+}
+.controlPanel input[type=radio]:checked + label {
+  background: lightblue;
+  color: #fff;
+  pointer-events: none;
+}
+.controlPanel label {
+  display: block;
+  float: left;
+  padding: 0 0.5em;
+  background: #aaa;
+  color: #333;
+  line-height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 150px;
+  text-align: center;
+}
+.controlPanel label:first-of-type {
+  border-radius: 3px 0 0 3px;
+}
+.controlPanel label:last-of-type {
+  border-radius: 0 3px 3px 0;
 }
 
 /*# sourceMappingURL=common.css.map */
