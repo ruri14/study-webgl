@@ -7,18 +7,40 @@
   }
 }
 
+.statusPanel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 200px;
+  max-width: 100%;
+  padding: 15px;
+  background: #fff;
+  font-size: 12px;
+  li {
+    & + li {
+      margin-top: .5em;
+    }
+  }
+}
+
 .controlPanel {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  width: 430px;
-  padding: 20px;
+  max-width: calc(100% - 30px);
+  padding: 15px;
   background: #fff;
+  li {
+   &:nth-child(n+2) {
+      margin-top: 1em;
+    }
+  }
   .name {
-    display: block;
-    float: left;
-    margin-right: .5em;
-    line-height: 30px;
+    display: inline-block;
+    margin-right: 1em;
+    line-height: 26px;
+    font-size: 12px;
+    width: 5em;
   }
   input {
     display: none;
@@ -29,21 +51,16 @@
     }
   }
   label {
-    display: block;
-    float: left;
+    display: inline-block;
     padding: 0 .5em;
     background: #aaa;
     color: #333;
-    line-height: 30px;
-    font-size: 14px;
+    line-height: 26px;
+    font-size: 12px;
     font-weight: bold;
-    width: 150px;
+    width: 130px;
+    max-width: 31vw;
     text-align: center;
-    &:first-of-type {
-      border-radius: 3px 0 0 3px;
-    }
-    &:last-of-type {
-      border-radius: 0 3px 3px 0;
-    }
+    border-radius: 3px;
   }
 }

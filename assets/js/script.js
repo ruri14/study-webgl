@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as TWEEN from '@tweenjs/tween.js';
+import { AnimationObjectGroup } from 'three';
 
 window.addEventListener('DOMContentLoaded', () => {
   const app = new App3();
@@ -13,7 +14,9 @@ class App3 {
   constructor() {
     this.renderer;
     this.scene;
-    this.camera;
+    this.perspectiveCamera;
+    this.orthographicCamera;
+    this.currentCamera;
     this.axesHelper;
     this.directionalLight;
     this.ambientLight;
@@ -36,7 +39,7 @@ class App3 {
   }
   static get RENDERER_PARAM() {
     return {
-      clearColor: 0xFCF9BE,
+      clearColor: 0xFFFFFF,
       width: window.innerWidth,
       height: window.innerHeight,
     };
@@ -44,24 +47,24 @@ class App3 {
   static get CAMERA_PARAM() {
     return {
       perspective: {
-        fov: 30,
+        fov: 20,
         aspect: window.innerWidth / window.innerHeight,
         near: 0.1,
         far: 1000,
-        x: 10,
-        y: 20,
-        z: 60,
+        x: 50,
+        y: 60,
+        z: 70,
       },
       orthographic: {
-        left: -20,
-        right: 20,
-        top: 20,
-        bottom: -20,
+        left: - window.innerWidth / 50,
+        right: window.innerWidth / 50,
+        top: window.innerHeight / 50,
+        bottom: - window.innerHeight / 50,
         near: 0.1,
         far: 1000,
-        x: 10,
-        y: 20,
-        z: 60,
+        x: 50,
+        y: 60,
+        z: 70,
       },
       lookAt: new THREE.Vector3(0.0, 0.0, 0.0),
     }
@@ -131,18 +134,20 @@ class App3 {
 
     this.scene = new THREE.Scene();
 
-    // this.camera = new THREE.PerspectiveCamera(
-    //   App3.CAMERA_PARAM.perspective.fov,
-    //   App3.CAMERA_PARAM.perspective.aspect,
-    //   App3.CAMERA_PARAM.perspective.near,
-    //   App3.CAMERA_PARAM.perspective.far,
-    // );
-    // this.camera.position.set(
-    //   App3.CAMERA_PARAM.perspective.x,
-    //   App3.CAMERA_PARAM.perspective.y,
-    //   App3.CAMERA_PARAM.perspective.z,
-    // );
-    this.camera = new THREE.OrthographicCamera(
+    this.perspectiveCamera = new THREE.PerspectiveCamera(
+      App3.CAMERA_PARAM.perspective.fov,
+      App3.CAMERA_PARAM.perspective.aspect,
+      App3.CAMERA_PARAM.perspective.near,
+      App3.CAMERA_PARAM.perspective.far,
+    );
+    this.perspectiveCamera.position.set(
+      App3.CAMERA_PARAM.perspective.x,
+      App3.CAMERA_PARAM.perspective.y,
+      App3.CAMERA_PARAM.perspective.z,
+    );
+    this.perspectiveCamera.lookAt(App3.CAMERA_PARAM.lookAt);
+    this.scene.add(this.perspectiveCamera);
+    this.orthographicCamera = new THREE.OrthographicCamera(
       App3.CAMERA_PARAM.orthographic.left,
       App3.CAMERA_PARAM.orthographic.right,
       App3.CAMERA_PARAM.orthographic.top,
@@ -150,13 +155,15 @@ class App3 {
       App3.CAMERA_PARAM.orthographic.near,
       App3.CAMERA_PARAM.orthographic.far,
     );
-    this.camera.position.set(
+    this.orthographicCamera.position.set(
       App3.CAMERA_PARAM.orthographic.x,
       App3.CAMERA_PARAM.orthographic.y,
       App3.CAMERA_PARAM.orthographic.z,
     );
-    this.camera.lookAt(App3.CAMERA_PARAM.lookAt);
-    this.scene.add(this.camera);
+    this.orthographicCamera.lookAt(App3.CAMERA_PARAM.lookAt);
+    this.scene.add(this.orthographicCamera);
+
+    this.currentCamera = this.perspectiveCamera;
 
 
     this.floorGeometory = new THREE.BoxGeometry(
@@ -219,7 +226,10 @@ class App3 {
     );
     this.scene.add(this.ambientLight);
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    // Helper
+    this.controls = new OrbitControls(this.currentCamera, this.renderer.domElement);
+    // this.controls.enableZoom = false;
 
     // this.shadowHelper = new THREE.CameraHelper(this.directionalLight.shadow.camera);
     // this.scene.add(this.shadowHelper);
@@ -230,15 +240,17 @@ class App3 {
     this.gridHelper = new THREE.GridHelper(App3.FLOOR_GEOMETORY_PARAM.x, App3.FLOOR_GEOMETORY_PARAM.x / 10);
     this.scene.add(this.gridHelper);
 
-    this.cameraHelper = new THREE.CameraHelper(this.camera);
-    this.scene.add(this.cameraHelper);
+    // this.cameraHelper = new THREE.CameraHelper(this.currentCamera);
+    // this.scene.add(this.cameraHelper);
   }
 
   render() {
     requestAnimationFrame(this.render);
-    this.controls.update();
+    // this.controls.update();
     TWEEN.update();
-    this.renderer.render(this.scene, this.camera);
+    showStatus(this);
+    changeSetteings(this);
+    this.renderer.render(this.scene, this.currentCamera);
   }
 }
 
@@ -284,4 +296,48 @@ function tweenBox(app) {
       });
   }
   tweenPosition.start();
+}
+
+function showStatus(app) {
+  const camera = document.getElementById('camera'), position = document.getElementById('position'), near = document.getElementById('near'), far = document.getElementById('far'), zoom = document.getElementById('zoom'), fov = document.getElementById('fov'), aspect = document.getElementById('aspect'), top = document.getElementById('top'), bottom = document.getElementById('bottom'), left = document.getElementById('left'), right = document.getElementById('right');
+  if (app.currentCamera.isPerspectiveCamera) {
+    camera.innerHTML = 'PerspectiveCamera';
+    fov.innerHTML = app.currentCamera.fov;
+    // aspect.innerHTML = app.currentCamera.aspect;
+    top.innerHTML = "-";
+    bottom.innerHTML = "-";
+    left.innerHTML = "-";
+    right.innerHTML = "-";
+  } else {
+    camera.innerHTML = 'OrthographicCamera';
+    fov.innerHTML = "-";
+    top.innerHTML = app.currentCamera.top;
+    bottom.innerHTML = app.currentCamera.bottom;
+    left.innerHTML = app.currentCamera.left;
+    right.innerHTML = app.currentCamera.right;
+  }
+  position.innerHTML = `x: ${Math.round(app.currentCamera.position['x'])} y: ${Math.round(app.currentCamera.position['y'])} z: ${Math.round(app.currentCamera.position['z'])}`;
+  near.innerHTML = app.currentCamera.near;
+  far.innerHTML = app.currentCamera.far;
+  zoom.innerHTML = app.currentCamera.zoom;
+}
+
+function changeSetteings(app) {
+  const buttonPerspective = document.getElementById('perspective'), buttonOrthographic = document.getElementById('orthographic'), buttonOn = document.getElementById('on'), buttonOff = document.getElementById('off');
+  buttonPerspective.addEventListener('click', () => {
+    app.currentCamera = app.perspectiveCamera;
+    app.controls.object = app.currentCamera;
+  });
+  buttonOrthographic.addEventListener('click', () => {
+    app.currentCamera = app.orthographicCamera;
+    app.controls.object = app.currentCamera;
+  });
+  buttonOn.addEventListener('click', () => {
+    app.scene.add(app.gridHelper);
+    app.scene.add(app.axesHelper);
+  });
+  buttonOff.addEventListener('click', () => {
+    app.scene.remove(app.gridHelper);
+    app.scene.remove(app.axesHelper);
+  });
 }
