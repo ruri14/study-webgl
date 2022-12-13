@@ -316,7 +316,7 @@ function showStatus(app) {
     left.innerHTML = app.currentCamera.left;
     right.innerHTML = app.currentCamera.right;
   }
-  position.innerHTML = `x: ${Math.round(app.currentCamera.position['x'])} y: ${Math.round(app.currentCamera.position['y'])} z: ${Math.round(app.currentCamera.position['z'])}`;
+  position.innerHTML = `x:${Math.round(app.currentCamera.position['x'])} y:${Math.round(app.currentCamera.position['y'])} z:${Math.round(app.currentCamera.position['z'])}`;
   near.innerHTML = app.currentCamera.near;
   far.innerHTML = app.currentCamera.far;
   zoom.innerHTML = app.currentCamera.zoom;

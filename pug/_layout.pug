@@ -7,10 +7,19 @@ html(lang="ja")
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
     meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no")
-    meta(name="description" content=metadescription)
+    title #{title}
     link(rel='stylesheet' href="./assets/css/destyle.min.css")
     link(rel='stylesheet' href="./assets/css/common.css")
     block pagecss
+    script(async src="https://ga.jspm.io/npm:es-module-shims@1.4.6/dist/es-module-shims.js")
+    script(type="importmap").
+      {
+        "imports": {
+          "three": "./node_modules/three/build/three.module.js",
+          "three/addons/": "./node_modules/three/examples/jsm/",
+          "@tweenjs/tween.js": "./node_modules/@tweenjs/tween.js/dist/tween.esm.js"
+        }
+      }
     block pagejs
 
   body

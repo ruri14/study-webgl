@@ -1,0 +1,57 @@
+extend _layout.pug
+
+append pagedata
+  - var title = "#001 PerspectiveCamera vs OrthographicCamera"
+
+append pagecss
+  link(rel="preconnect" href="https://fonts.googleapis.com")
+  link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+  link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300family=Roboto+Mono&display=swap" rel="stylesheet")
+  link(rel='stylesheet' href="./assets/css/style_001.css")
+
+append pagejs
+  script(src="./assets/js/script.js" type="module")
+
+block main
+  main
+    .container
+      #webgl
+      .statusPanel
+        ul
+          li
+            span#camera
+          li position: 
+            span#position
+          li near: 
+            span#near
+          li far: 
+            span#far
+          li zoom: 
+            span#zoom
+          li fov: 
+            span#fov
+          //- li aspect: 
+          //-   span#aspect
+          li top: 
+            span#top
+          li bottom: 
+            span#bottom
+          li left: 
+            span#left
+          li right: 
+            span#right
+      .controlPanel
+        ul
+          li.camera
+            span.name CAMERA:
+            input(type="radio" name="camera" id="perspective" value="0" checked)
+            label(for="perspective") PERSPECTIVE
+            input(type="radio" name="camera" id="orthographic" value="1")
+            label(for="orthographic") ORTHOGRAPHIC
+          li.helper
+            span.name HELPER:
+            input(type="radio" name="helper" id="on" value="0" checked)
+            label(for="on") ON
+            input(type="radio" name="helper" id="off" value="1")
+            label(for="off") OFF
+
