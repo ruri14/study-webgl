@@ -1,3 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&family=Roboto+Mono&display=swap");
+html, body {
+  font-family: "Roboto Mono", monospace;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  font-size: 15px;
+}
+.nav__inner {
+  transform: translateY(-2em);
+}
+
+.navList__item {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+.navList__item a:hover {
+  opacity: 0.5;
+}
+
 .container {
   position: relative;
   width: 100%;
