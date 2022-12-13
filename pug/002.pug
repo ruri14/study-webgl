@@ -1,0 +1,15 @@
+extend _layout.pug
+
+append pagedata
+  - var title = "#002"
+
+append pagecss
+  link(rel='stylesheet' href="./assets/css/style_002.css")
+
+append pagejs
+  script(src="./assets/js/script_002.js" type="module")
+
+block main
+  main
+    .container
+      #webgl
