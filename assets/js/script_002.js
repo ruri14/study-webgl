@@ -6,7 +6,15 @@ import { AnimationObjectGroup } from 'three';
 window.addEventListener('DOMContentLoaded', () => {
   const app = new App3();
   app.init();
+  // printText(app);
+  // const directions = ["r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "r", "d", "r", "r", "r", "d", "r", "r", "r", "r"];
+  // const text = ["H", "a", "p", "p", "y", "-", "B", "i", "r", "t", "h", "-", "D", "a", "y", "-", "M", "a", "k", "i"];
+  // directions.forEach((e, i) => {
+  //   tweenBox(app.box, "r");
+  //   console.log(e);
+  // })
   tweenBox(app);
+  // addHeart(app);
   app.render();
 }, false);
 
@@ -52,8 +60,8 @@ class App3 {
         near: 0.1,
         far: 1000,
         x: 50,
-        y: 60,
-        z: 70,
+        y: 80,
+        z: 60,
       },
       orthographic: {
         left: - window.innerWidth / 50,
@@ -62,11 +70,12 @@ class App3 {
         bottom: - window.innerHeight / 50,
         near: 0.1,
         far: 1000,
-        x: 50,
-        y: 60,
-        z: 70,
+        x: 26,
+        y: 72,
+        z: 68,
+        zoom: 4,
       },
-      lookAt: new THREE.Vector3(0.0, 0.0, 0.0),
+      lookAt: new THREE.Vector3(8.8, 0, 2),
     }
   }
   static get FLOOR_GEOMETORY_PARAM() {
@@ -134,19 +143,6 @@ class App3 {
 
     this.scene = new THREE.Scene();
 
-    this.perspectiveCamera = new THREE.PerspectiveCamera(
-      App3.CAMERA_PARAM.perspective.fov,
-      App3.CAMERA_PARAM.perspective.aspect,
-      App3.CAMERA_PARAM.perspective.near,
-      App3.CAMERA_PARAM.perspective.far,
-    );
-    this.perspectiveCamera.position.set(
-      App3.CAMERA_PARAM.perspective.x,
-      App3.CAMERA_PARAM.perspective.y,
-      App3.CAMERA_PARAM.perspective.z,
-    );
-    this.perspectiveCamera.lookAt(App3.CAMERA_PARAM.lookAt);
-    this.scene.add(this.perspectiveCamera);
     this.orthographicCamera = new THREE.OrthographicCamera(
       App3.CAMERA_PARAM.orthographic.left,
       App3.CAMERA_PARAM.orthographic.right,
@@ -161,9 +157,11 @@ class App3 {
       App3.CAMERA_PARAM.orthographic.z,
     );
     this.orthographicCamera.lookAt(App3.CAMERA_PARAM.lookAt);
+    this.orthographicCamera.zoom = App3.CAMERA_PARAM.orthographic.zoom;
+    this.orthographicCamera.updateProjectionMatrix();
     this.scene.add(this.orthographicCamera);
 
-    this.currentCamera = this.perspectiveCamera;
+    this.currentCamera = this.orthographicCamera;
 
 
     this.floorGeometory = new THREE.BoxGeometry(
@@ -228,17 +226,17 @@ class App3 {
 
 
     // Helper
-    this.controls = new OrbitControls(this.currentCamera, this.renderer.domElement);
+    // this.controls = new OrbitControls(this.currentCamera, this.renderer.domElement);
     // this.controls.enableZoom = false;
 
     // this.shadowHelper = new THREE.CameraHelper(this.directionalLight.shadow.camera);
     // this.scene.add(this.shadowHelper);
 
-    this.axesHelper = new THREE.AxesHelper(100);
-    this.scene.add(this.axesHelper);
+    // this.axesHelper = new THREE.AxesHelper(100);
+    // this.scene.add(this.axesHelper);
 
-    this.gridHelper = new THREE.GridHelper(App3.FLOOR_GEOMETORY_PARAM.x, App3.FLOOR_GEOMETORY_PARAM.x / 10);
-    this.scene.add(this.gridHelper);
+    // this.gridHelper = new THREE.GridHelper(App3.FLOOR_GEOMETORY_PARAM.x, App3.FLOOR_GEOMETORY_PARAM.x / 10);
+    // this.scene.add(this.gridHelper);
 
     // this.cameraHelper = new THREE.CameraHelper(this.currentCamera);
     // this.scene.add(this.cameraHelper);
@@ -253,45 +251,117 @@ class App3 {
 }
 
 function tweenBox(app) {
+  const directions = ["r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "d", "r", "r", "d", "r", "r", "r", "r"];
+  const text = ["H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y", "M", "A", "K", "I"];
   const target = {
     position: app.box.position,
     rotation: app.box.rotation,
   }
-  const randomInt = Math.floor(Math.random() * 4);
-  const duration = 1200;
-  let tweenPosition;
-  if (randomInt === 0) {
-    tweenPosition = new TWEEN.Tween(target)
-      .to({ position: { x: app.box.position['x'] - 1 }, rotation: { z: Math.PI / 2 } }, duration)
-      .easing(TWEEN.Easing.Cubic.InOut)
-      .onComplete(function () {
-        app.box.rotation.set(0, 0, 0);
-        tweenBox(app);
-      });
-  } else if (randomInt === 1) {
-    tweenPosition = new TWEEN.Tween(target)
-      .to({ position: { x: app.box.position['x'] + 1 }, rotation: { z: Math.PI / -2 } }, duration)
-      .easing(TWEEN.Easing.Cubic.InOut)
-      .onComplete(function () {
-        app.box.rotation.set(0, 0, 0);
-        tweenBox(app);
-      });
-  } else if (randomInt === 2) {
-    tweenPosition = new TWEEN.Tween(target)
-      .to({ position: { z: app.box.position['z'] - 1 }, rotation: { x: Math.PI / -2 } }, duration)
-      .easing(TWEEN.Easing.Cubic.InOut)
-      .onComplete(function () {
-        app.box.rotation.set(0, 0, 0);
-        tweenBox(app);
-      });
-  } else if (randomInt === 3) {
-    tweenPosition = new TWEEN.Tween(target)
-      .to({ position: { z: app.box.position['z'] + 1 }, rotation: { x: Math.PI / 2 } }, duration)
-      .easing(TWEEN.Easing.Cubic.InOut)
-      .onComplete(function () {
-        app.box.rotation.set(0, 0, 0);
-        tweenBox(app);
-      });
+  const duration = 500;
+  let xi = 1;
+  let zi = 1;
+  var firstTween;
+  var earlierTween = firstTween;
+  directions.forEach((e, i) => {
+    if (e === "r") {
+      var tween = new TWEEN.Tween(target)
+        .to({ position: { x: target.position['x'] + xi }, rotation: { z: Math.PI / -2 } }, duration)
+        .easing(TWEEN.Easing.Cubic.InOut)
+        .onComplete(function () {
+          app.box.rotation.set(0, 0, 0);
+          if (text[i] !== "-") {
+            printText(app, text[i]);
+          }
+        });
+      xi += 1;
+    } else {
+      var tween = new TWEEN.Tween(target)
+        .to({ position: { z: target.position['z'] + zi }, rotation: { x: Math.PI / 2 } }, duration)
+        .easing(TWEEN.Easing.Cubic.InOut)
+        .onComplete(function () {
+          app.box.rotation.set(0, 0, 0);
+          if (text[i] !== "-") {
+            printText(app, text[i]);
+          }
+        });
+      zi += 1;
+    }
+
+    if (i === 0) {
+      firstTween = tween;
+    } else {
+      earlierTween.chain(tween);
+    }
+    if (i === (directions.length - 1)) {
+      tween.onComplete(function () {
+        console.log("di");
+        app.scene.remove(app.box);
+        addHeart(app);
+      })
+    }
+    earlierTween = tween;
+  });
+  firstTween.start();
+}
+
+function printText(app, letter) {
+  if (letter !== "-") {
+    const material = new THREE.MeshStandardMaterial({
+      map: new THREE.TextureLoader().load(`assets/images/002/${letter}.jpg`)
+    });
+    const text = new THREE.Mesh(app.geometory, material);
+    text.position.set(
+      app.box.position['x'],
+      text.geometry.parameters.width / -2 + 0.0001,
+      app.box.position['z'],
+    );
+    app.scene.add(text);
   }
-  tweenPosition.start();
+}
+
+function addHeart(app) {
+  const x = -0.25, y = 0;
+
+  const heartShape = new THREE.Shape();
+
+  heartShape.moveTo(x + 0.25, y + 0.25);
+  heartShape.bezierCurveTo(x + 0.25, y + 0.25, x + 0.2, y, x, y);
+  heartShape.bezierCurveTo(x - 0.3, y, x - 0.3, y + 0.35, x - 0.3, y + 0.35);
+  heartShape.bezierCurveTo(x - 0.3, y + 0.55, x - 0.15, y + 0.77, x + 0.25, y + 0.95);
+  heartShape.bezierCurveTo(x + 0.6, y + 0.77, x + 0.8, y + 0.55, x + 0.8, y + 0.35);
+  heartShape.bezierCurveTo(x + 0.8, y + 0.35, x + 0.8, y, x + 0.5, y);
+  heartShape.bezierCurveTo(x + 0.35, y, x + 0.25, y + 0.25, x + 0.25, y + 0.25);
+
+  const geometry = new THREE.ShapeGeometry(heartShape);
+  geometry.translate(0, 0, 0);
+  const material = new THREE.MeshBasicMaterial({ color: 0xC93A40 });
+  const mesh1 = new THREE.Mesh(geometry, material);
+  mesh1.rotation['x'] = Math.PI;
+  mesh1.position.set(
+    // 0,1,0
+    app.box.position['x'], 1, app.box.position['z']
+  );
+  const mesh2 = new THREE.Mesh(geometry, material);
+  mesh2.rotation['x'] = Math.PI;
+  mesh2.rotation['y'] = Math.PI;
+  mesh2.position.set(
+    // 0,1,0
+    app.box.position['x'], 1, app.box.position['z']
+  );
+  app.scene.add(mesh1);
+  app.scene.add(mesh2);
+  // const heartMesh = new THREE.Group();
+  // heartMesh.translate(app.box.position['x'], 1, app.box.position['z']);
+  // heartMesh.add(mesh1);
+  // heartMesh.add(mesh2);
+  // console.log(heartMesh.position, heartMesh.rotation);
+  // app.scene.add(heartMesh);
+  var tween1 = new TWEEN.Tween(mesh1.rotation)
+    .to({ y: Math.PI * 2 }, 4000)
+    .repeat(Infinity)
+  var tween2 = new TWEEN.Tween(mesh2.rotation)
+    .to({ y: Math.PI * 3 }, 4000)
+    .repeat(Infinity)
+  tween1.start();
+  tween2.start();
 }
