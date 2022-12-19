@@ -181,9 +181,6 @@ class App3 {
       App3.BOX_GEOMETORY_PARAM.z,
     );
     this.material = new THREE.MeshStandardMaterial(App3.BOX_MATERIAL_PARAM);
-    // this.material = new THREE.MeshStandardMaterial({
-    //   map: new THREE.TextureLoader().load(`assets/images/002/box_texture.jpg`)
-    // });
     this.box = new THREE.Mesh(this.geometory, this.material);
     this.box.position.set(
       App3.BOX_GEOMETORY_PARAM.x / 2,
@@ -314,7 +311,7 @@ function tweenBox(app) {
 function printText(app, letter) {
   if (letter !== "-") {
     const material = new THREE.MeshStandardMaterial({
-      map: new THREE.TextureLoader().load(`assets/images/002/${letter}.jpg`)
+      map: new THREE.TextureLoader().load(`assets/images/happybirthday/${letter}.jpg`)
     });
     const text = new THREE.Mesh(app.geometory, material);
     text.position.set(
