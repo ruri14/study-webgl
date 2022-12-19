@@ -1,0 +1,12 @@
+.nav {
+  display: none;
+}
+#playButton {
+  position: fixed;
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  &.is-open {
+    display: none;
+  }
+}

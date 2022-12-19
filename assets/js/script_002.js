@@ -3,18 +3,13 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as TWEEN from '@tweenjs/tween.js';
 import { AnimationObjectGroup } from 'three';
 
-window.addEventListener('DOMContentLoaded', () => {
+const playButton = document.querySelector('#playButton');
+
+playButton.addEventListener('click', () => {
+  playButton.classList.add('is-open');
   const app = new App3();
   app.init();
-  // printText(app);
-  // const directions = ["r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "r", "d", "r", "r", "r", "d", "r", "r", "r", "r"];
-  // const text = ["H", "a", "p", "p", "y", "-", "B", "i", "r", "t", "h", "-", "D", "a", "y", "-", "M", "a", "k", "i"];
-  // directions.forEach((e, i) => {
-  //   tweenBox(app.box, "r");
-  //   console.log(e);
-  // })
   tweenBox(app);
-  // addHeart(app);
   app.render();
 }, false);
 
@@ -70,12 +65,12 @@ class App3 {
         bottom: - window.innerHeight / 50,
         near: 0.1,
         far: 1000,
-        x: 26,
+        x: 20,
         y: 72,
         z: 68,
         zoom: 4,
       },
-      lookAt: new THREE.Vector3(8.8, 0, 2),
+      lookAt: new THREE.Vector3(10.5, 0, 1.5),
     }
   }
   static get FLOOR_GEOMETORY_PARAM() {
@@ -99,7 +94,8 @@ class App3 {
   }
   static get BOX_MATERIAL_PARAM() {
     return {
-      color: 0x87CEEB,
+      // color: 0xC93A40,
+      color: 0xFFFFFF,
     }
   }
   static get DIRECTIONAL_LIGHT_PARAM() {
@@ -176,7 +172,7 @@ class App3 {
       App3.FLOOR_GEOMETORY_PARAM.y / -2,
       0,
     );
-    this.floor.receiveShadow = true;
+    // this.floor.receiveShadow = true;
     this.scene.add(this.floor);
 
     this.geometory = new THREE.BoxGeometry(
@@ -185,6 +181,9 @@ class App3 {
       App3.BOX_GEOMETORY_PARAM.z,
     );
     this.material = new THREE.MeshStandardMaterial(App3.BOX_MATERIAL_PARAM);
+    // this.material = new THREE.MeshStandardMaterial({
+    //   map: new THREE.TextureLoader().load(`assets/images/002/box_texture.jpg`)
+    // });
     this.box = new THREE.Mesh(this.geometory, this.material);
     this.box.position.set(
       App3.BOX_GEOMETORY_PARAM.x / 2,
@@ -251,13 +250,17 @@ class App3 {
 }
 
 function tweenBox(app) {
-  const directions = ["r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "d", "r", "r", "d", "r", "r", "r", "r"];
-  const text = ["H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y", "M", "A", "K", "I"];
+  const directions = ["r", "r", "r", "r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "d", "r", "r", "r"];
+  const text = ["-", "-", "-", "H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y"];
   const target = {
     position: app.box.position,
     rotation: app.box.rotation,
   }
-  const duration = 500;
+
+  const soundBox = new Audio('./assets/sounds/box.mp3');
+  const soundBell = new Audio('./assets/sounds/bell.mp3');
+
+  const duration = 700;
   let xi = 1;
   let zi = 1;
   var firstTween;
@@ -272,6 +275,7 @@ function tweenBox(app) {
           if (text[i] !== "-") {
             printText(app, text[i]);
           }
+          soundBox.play();
         });
       xi += 1;
     } else {
@@ -283,10 +287,10 @@ function tweenBox(app) {
           if (text[i] !== "-") {
             printText(app, text[i]);
           }
+          soundBox.play();
         });
       zi += 1;
     }
-
     if (i === 0) {
       firstTween = tween;
     } else {
@@ -294,9 +298,12 @@ function tweenBox(app) {
     }
     if (i === (directions.length - 1)) {
       tween.onComplete(function () {
-        console.log("di");
-        app.scene.remove(app.box);
-        addHeart(app);
+        soundBox.play();
+        setTimeout(() => {
+          app.scene.remove(app.box);
+          addHeart(app);
+          soundBell.play();
+        }, 600);
       })
     }
     earlierTween = tween;
@@ -338,24 +345,17 @@ function addHeart(app) {
   const mesh1 = new THREE.Mesh(geometry, material);
   mesh1.rotation['x'] = Math.PI;
   mesh1.position.set(
-    // 0,1,0
     app.box.position['x'], 1, app.box.position['z']
   );
   const mesh2 = new THREE.Mesh(geometry, material);
   mesh2.rotation['x'] = Math.PI;
   mesh2.rotation['y'] = Math.PI;
   mesh2.position.set(
-    // 0,1,0
     app.box.position['x'], 1, app.box.position['z']
   );
   app.scene.add(mesh1);
   app.scene.add(mesh2);
-  // const heartMesh = new THREE.Group();
-  // heartMesh.translate(app.box.position['x'], 1, app.box.position['z']);
-  // heartMesh.add(mesh1);
-  // heartMesh.add(mesh2);
-  // console.log(heartMesh.position, heartMesh.rotation);
-  // app.scene.add(heartMesh);
+
   var tween1 = new TWEEN.Tween(mesh1.rotation)
     .to({ y: Math.PI * 2 }, 4000)
     .repeat(Infinity)
