@@ -33,6 +33,7 @@ class App3 {
     this.axesHelper;
     this.directionalLight;
     this.ambientLight;
+    this.pointLight;
     this.controls;
     this.render = this.render.bind(this);
     this.shadowHelper;
@@ -52,7 +53,7 @@ class App3 {
   }
   static get RENDERER_PARAM() {
     return {
-      clearColor: 0xFFFFFF,
+      clearColor: 0x191970,
       width: window.innerWidth,
       height: window.innerHeight,
     };
@@ -133,8 +134,20 @@ class App3 {
   }
   static get AMBIENT_LIGHT_PARAM() {
     return {
-      color: 0x606060,
-      intensity: 1,
+      color: 0x0066FF,
+      // color: 0x030890,
+      intensity: 0.1,
+    }
+  }
+  static get POINT_LIGHT_PARAM() {
+    return {
+      color: 0xFAFAD2,
+      intensity: 2.5,
+      distance: 30,
+      decay: 2,
+      x: 20,
+      y: 5,
+      z: -10,
     }
   }
 
@@ -191,6 +204,8 @@ class App3 {
       App3.BOX_GEOMETRY_PARAM.z,
     );
     this.material = new THREE.MeshStandardMaterial(App3.BOX_MATERIAL_PARAM);
+    this.material.transparent = true;
+    this.material.opacity = 0;
     this.box = new THREE.Mesh(this.geometry, this.material);
     this.box.position.set(
       App3.BOX_GEOMETRY_PARAM.x / 2,
@@ -202,34 +217,24 @@ class App3 {
     // this.box.add(this.boxAxis);
     this.scene.add(this.box);
 
-    this.directionalLight = new THREE.DirectionalLight(
-      App3.DIRECTIONAL_LIGHT_PARAM.color,
-      App3.DIRECTIONAL_LIGHT_PARAM.intensity
+    this.pointLight = new THREE.PointLight(
+      App3.POINT_LIGHT_PARAM.color,
+      App3.POINT_LIGHT_PARAM.intensity,
+      App3.POINT_LIGHT_PARAM.distance,
+      App3.POINT_LIGHT_PARAM.decay
     );
-    this.directionalLight.position.set(
-      App3.DIRECTIONAL_LIGHT_PARAM.x,
-      App3.DIRECTIONAL_LIGHT_PARAM.y,
-      App3.DIRECTIONAL_LIGHT_PARAM.z,
-    );
-    // this.directionalLight.target.set()
-    this.directionalLight.castShadow = true;
-    this.scene.add(this.directionalLight);
-
-    this.directionalLight.shadow.mapSize.width = App3.DIRECTIONAL_LIGHT_PARAM.shadow.mapSize.width;
-    this.directionalLight.shadow.mapSize.height = App3.DIRECTIONAL_LIGHT_PARAM.shadow.mapSize.height;
-    this.directionalLight.shadow.camera.left = App3.DIRECTIONAL_LIGHT_PARAM.shadow.camera.left;
-    this.directionalLight.shadow.camera.right = App3.DIRECTIONAL_LIGHT_PARAM.shadow.camera.right;
-    this.directionalLight.shadow.camera.top = App3.DIRECTIONAL_LIGHT_PARAM.shadow.camera.top;
-    this.directionalLight.shadow.camera.bottom = App3.DIRECTIONAL_LIGHT_PARAM.shadow.camera.bottom;
-    this.directionalLight.shadow.camera.near = App3.DIRECTIONAL_LIGHT_PARAM.shadow.camera.near;
-    this.directionalLight.shadow.camera.far = App3.DIRECTIONAL_LIGHT_PARAM.shadow.camera.far;
+    this.pointLight.position.set(
+      App3.POINT_LIGHT_PARAM.x,
+      App3.POINT_LIGHT_PARAM.y,
+      App3.POINT_LIGHT_PARAM.z,
+    )
+    this.scene.add(this.pointLight);
 
     this.ambientLight = new THREE.AmbientLight(
       App3.AMBIENT_LIGHT_PARAM.color,
       App3.AMBIENT_LIGHT_PARAM.intensity,
     );
     this.scene.add(this.ambientLight);
-
 
     // Helper
     // this.controls = new OrbitControls(this.currentCamera, this.renderer.domElement);
@@ -324,14 +329,14 @@ function printText(app, letter) {
     ctx.canvas.width = 100;
     ctx.canvas.height = 100;
 
-    ctx.fillStyle = '#F4F4F4';
+    ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, 100, 100);
 
-    ctx.fillStyle = '#000';
+    // ctx.fillStyle = '#fff';
     ctx.font = '100px Rubik Spray Paint';
-    ctx.fillText(letter, 10, 90);
+    ctx.strokeText(letter, 10, 90);
     const texture = new THREE.CanvasTexture(ctx.canvas);
-    const material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshStandardMaterial({
       map: texture,
     });
     const text = new THREE.Mesh(app.geometry, material);
