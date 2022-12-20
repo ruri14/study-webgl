@@ -3,6 +3,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as TWEEN from '@tweenjs/tween.js';
 import { AnimationObjectGroup } from 'three';
 
+let myFont = new FontFace(
+  'Rubik Spray Paint',
+  "url(https://fonts.gstatic.com/l/font?kit=WnzhHBAoeBPUDTB4EWR82y6EXWPH-Ro7QoCBZCZF0UfG155FAppa600&skey=174ec27ca854506c&v=v1) format('woff2')"
+);
+
+myFont.load().then((font) => {
+  document.fonts.add(font);
+  console.log("Font loaded");
+});
+
 const playButton = document.querySelector('#playButton');
 
 playButton.addEventListener('click', () => {
@@ -247,8 +257,8 @@ class App3 {
 }
 
 function tweenBox(app) {
-  const directions = ["r", "r", "r", "r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "d", "r", "r", "r"];
-  const text = ["-", "-", "-", "H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y"];
+  const directions = ["r", "r", "r", "r", "r", "r", "r", "r", "d", "r", "r", "r", "r", "r", "r", "r", "r", "r"];
+  const text = ["-", "-", "-", "M", "e", "r", "r", "y", "C", "h", "r", "i", "s", "t", "m", "a", "s"];
   const target = {
     position: app.box.position,
     rotation: app.box.rotation,
@@ -309,11 +319,20 @@ function tweenBox(app) {
 }
 
 function printText(app, letter) {
-  const canvas = document.createElement('canvas').getContext('2d');
-
   if (letter !== "-") {
-    const material = new THREE.MeshStandardMaterial({
-      map: new THREE.TextureLoader().load(`assets/images/happybirthday/${letter}.jpg`)
+    const ctx = document.createElement('canvas').getContext('2d');
+    ctx.canvas.width = 100;
+    ctx.canvas.height = 100;
+
+    ctx.fillStyle = '#F4F4F4';
+    ctx.fillRect(0, 0, 100, 100);
+
+    ctx.fillStyle = '#000';
+    ctx.font = '100px Rubik Spray Paint';
+    ctx.fillText(letter, 10, 90);
+    const texture = new THREE.CanvasTexture(ctx.canvas);
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
     });
     const text = new THREE.Mesh(app.geometry, material);
     text.position.set(

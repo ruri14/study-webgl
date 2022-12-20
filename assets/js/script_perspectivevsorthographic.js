@@ -27,13 +27,13 @@ class App3 {
     this.cameraHelper;
 
     // boxes
-    this.geometory;
+    this.geometry;
     this.material;
     this.box;
     this.boxAxis;
 
     // floor
-    this.floorGeometory;
+    this.floorGeometry;
     this.floorMaterial;
     this.floor;
   }
@@ -69,7 +69,7 @@ class App3 {
       lookAt: new THREE.Vector3(0.0, 0.0, 0.0),
     }
   }
-  static get FLOOR_GEOMETORY_PARAM() {
+  static get FLOOR_GEOMETRY_PARAM() {
     return {
       x: 1000,
       y: 1,
@@ -81,7 +81,7 @@ class App3 {
       color: 0xFFFFFF,
     }
   }
-  static get BOX_GEOMETORY_PARAM() {
+  static get BOX_GEOMETRY_PARAM() {
     return {
       x: 1,
       y: 1,
@@ -166,32 +166,32 @@ class App3 {
     this.currentCamera = this.perspectiveCamera;
 
 
-    this.floorGeometory = new THREE.BoxGeometry(
-      App3.FLOOR_GEOMETORY_PARAM.x,
-      App3.FLOOR_GEOMETORY_PARAM.y,
-      App3.FLOOR_GEOMETORY_PARAM.z,
+    this.floorGeometry = new THREE.BoxGeometry(
+      App3.FLOOR_GEOMETRY_PARAM.x,
+      App3.FLOOR_GEOMETRY_PARAM.y,
+      App3.FLOOR_GEOMETRY_PARAM.z,
     );
     this.floorMaterial = new THREE.MeshStandardMaterial(App3.FLOOR_MATERIAL_PARAM);
-    this.floor = new THREE.Mesh(this.floorGeometory, this.floorMaterial);
+    this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
     this.floor.position.set(
       0,
-      App3.FLOOR_GEOMETORY_PARAM.y / -2,
+      App3.FLOOR_GEOMETRY_PARAM.y / -2,
       0,
     );
     this.floor.receiveShadow = true;
     this.scene.add(this.floor);
 
-    this.geometory = new THREE.BoxGeometry(
-      App3.BOX_GEOMETORY_PARAM.x,
-      App3.BOX_GEOMETORY_PARAM.y,
-      App3.BOX_GEOMETORY_PARAM.z,
+    this.geometry = new THREE.BoxGeometry(
+      App3.BOX_GEOMETRY_PARAM.x,
+      App3.BOX_GEOMETRY_PARAM.y,
+      App3.BOX_GEOMETRY_PARAM.z,
     );
     this.material = new THREE.MeshStandardMaterial(App3.BOX_MATERIAL_PARAM);
-    this.box = new THREE.Mesh(this.geometory, this.material);
+    this.box = new THREE.Mesh(this.geometry, this.material);
     this.box.position.set(
-      App3.BOX_GEOMETORY_PARAM.x / 2,
-      App3.BOX_GEOMETORY_PARAM.y / 2,
-      App3.BOX_GEOMETORY_PARAM.z / 2,
+      App3.BOX_GEOMETRY_PARAM.x / 2,
+      App3.BOX_GEOMETRY_PARAM.y / 2,
+      App3.BOX_GEOMETRY_PARAM.z / 2,
     );
     this.box.castShadow = true;
     // this.boxAxis = new THREE.AxesHelper(20);
@@ -237,7 +237,7 @@ class App3 {
     this.axesHelper = new THREE.AxesHelper(100);
     this.scene.add(this.axesHelper);
 
-    this.gridHelper = new THREE.GridHelper(App3.FLOOR_GEOMETORY_PARAM.x, App3.FLOOR_GEOMETORY_PARAM.x / 10);
+    this.gridHelper = new THREE.GridHelper(App3.FLOOR_GEOMETRY_PARAM.x, App3.FLOOR_GEOMETRY_PARAM.x / 10);
     this.scene.add(this.gridHelper);
 
     // this.cameraHelper = new THREE.CameraHelper(this.currentCamera);

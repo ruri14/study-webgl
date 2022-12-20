@@ -1,0 +1,17 @@
+extend _layout.pug
+
+append pagedata
+  - var title = "Happy Birthday"
+  - var date = "2022-12-19"
+
+append pagecss
+  link(rel='stylesheet' href="./assets/css/style_merrychristmas.css")
+
+append pagejs
+  script(src="./assets/js/script_merrychristmas.js" type="module")
+
+block main
+  main
+    .container
+      #playButton
+      #webgl
