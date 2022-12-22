@@ -1,0 +1,18 @@
+extend _layout.pug
+
+append pagedata
+  - var title = "Merry Christmas"
+  - var date = "2022-12-23"
+
+append pagecss
+  link(rel='stylesheet' href="./assets/css/style_christmas.css")
+
+append pagejs
+  script(src="./assets/js/script_christmas.js" type="module")
+
+block main
+  main
+    .container
+      canvas#webgl
+      #smoke
+      //- #playButton
