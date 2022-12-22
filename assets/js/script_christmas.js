@@ -2,6 +2,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import * as TWEEN from '@tweenjs/tween.js';
+
+const playButton = document.querySelector('#playButton');
+
+playButton.addEventListener('click', () => {
+  const soundBox = new Audio('./assets/sounds/star.mp3');
+  setTimeout(() => { soundBox.play(); }, 2000);
+  playButton.classList.add('is-open');
+  render();
+}, false);
 
 
 // for convenience
@@ -37,8 +47,8 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 //camera
-camera.position.set(30, 10, 0);
-camera.lookAt(new THREE.Vector3(0, 5, 0));
+camera.position.set(25, 7, 0);
+camera.lookAt(new THREE.Vector3(0, 4, 0));
 
 //lights, 3 point lighting
 var col_light = 0xffffff; // set
@@ -74,14 +84,24 @@ scene.add(backLight);
 
 //materials
 var mat_white = new THREE.MeshLambertMaterial({ color: 0xffffff });
-var mat_green = new THREE.MeshLambertMaterial({ color: 0x2D4628 });
+var mat_green = new THREE.MeshLambertMaterial({ color: 0x374028 });
 var mat_grey = new THREE.MeshLambertMaterial({ color: 0xf3f2f7 });
 var mat_yellow = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
 var mat_orange = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
-var mat_dark = new THREE.MeshLambertMaterial({ color: 0x696752 });
-var mat_brown = new THREE.MeshLambertMaterial({ color: 0x696752 });
-var mat_red = new THREE.MeshLambertMaterial({ color: 0x760007 });
-var mat_gold = new THREE.MeshLambertMaterial({ color: 0xf2d299 });
+var mat_dark = new THREE.MeshLambertMaterial({ color: 0x4e3b2f });
+var mat_brown = new THREE.MeshLambertMaterial({ color: 0x4e3b2f });
+var mat_red = new THREE.MeshLambertMaterial({ color: 0x78383c });
+var mat_gold = new THREE.MeshLambertMaterial({ color: 0xFEBE80 });
+var mat_silver = new THREE.MeshLambertMaterial({ color: 0xebedf1 });
+// var mat_white = new THREE.MeshLambertMaterial({ color: 0xffffff });
+// var mat_green = new THREE.MeshLambertMaterial({ color: 0x2D4628 });
+// var mat_grey = new THREE.MeshLambertMaterial({ color: 0xf3f2f7 });
+// var mat_yellow = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
+// var mat_orange = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
+// var mat_dark = new THREE.MeshLambertMaterial({ color: 0x696752 });
+// var mat_brown = new THREE.MeshLambertMaterial({ color: 0x696752 });
+// var mat_red = new THREE.MeshLambertMaterial({ color: 0x760007 });
+// var mat_gold = new THREE.MeshLambertMaterial({ color: 0xf2d299 });
 
 //-------------------------------------ground-------------------------------------
 var layers = [];
@@ -116,51 +136,83 @@ scene.add(ground);
 var tree = new THREE.Group();
 
 //leaf
-var geo_cone_s = new THREE.ConeGeometry(2, 4, 7, 1, true);
-var geo_cone_t = new THREE.ConeGeometry(2, 5, 7, 1, true);
+var geo_cone = new THREE.ConeGeometry(2, 4, 7, 1, true);
+var cone = [];
 
-var cone1 = new THREE.Mesh(geo_cone_s, mat_green);
-cone1.position.set(-2, 9, -2);
-cone1.scale.set(0.8, 0.8, 0.8);
-cone1.castShadow = true;
-cone1.receiveShadow = true;
+for (var i = 0; i < 3; i++) {
+  cone[i] = new THREE.Mesh(geo_cone, mat_green);
+  cone[i].castShadow = true;
+  cone[i].receiveShadow = true;
+  tree.add(cone[i]);
+}
 
-var cone2 = new THREE.Mesh(geo_cone_s, mat_green);
-cone2.position.set(-2, 7.5, -2);
-cone2.rotateY(pi / 6);
-cone2.castShadow = true;
-cone2.receiveShadow = true;
+cone[0].position.set(-2, 9, -2);
+cone[0].scale.set(0.8, 0.8, 0.8);
 
+cone[1].position.set(-2, 7.45, -2);
+cone[1].scale.set(1.1, 1.1, 1.1);
+cone[1].rotateY(pi / 6);
 
-var cone3 = new THREE.Mesh(geo_cone_t, mat_green);
-cone3.position.set(-2, 6, -2);
-cone3.scale.set(1.2, 1.2, 1.2);
-cone3.rotateY(pi / 4);
-cone3.castShadow = true;
-cone3.receiveShadow = true;
+cone[2].position.set(-2, 5.5, -2);
+cone[2].scale.set(1.4, 1.4, 1.4);
+cone[2].rotateY(pi / 4);
 
-
-var geo_stem = new THREE.CylinderGeometry(0.5, 0.5, 4, 5);
+//stem
+var geo_stem = new THREE.CylinderGeometry(0.6, 0.6, 4, 5);
 var stem = new THREE.Mesh(geo_stem, mat_brown);
 stem.position.set(-2, 2, -2);
 stem.castShadow = true;
 stem.receiveShadow = true;
-
-
-tree.add(cone1);
-tree.add(cone2);
-tree.add(cone3);
 tree.add(stem);
 
-tree.castShadow = true;
-scene.add(tree);
-
-//-------------------------------------star-------------------------------------
+//star
 var geo_star = new THREE.IcosahedronGeometry(0.5, 0);
 var star = new THREE.Mesh(geo_star, mat_yellow);
 star.position.set(-2, 10.8, -2);
 star.castShadow = true;
-scene.add(star);
+tree.add(star);
+
+//treelights
+var goldlights = [];
+var silverlights = [];
+for (var i = 0; i < 9; i++) {
+  goldlights[i] = new THREE.Mesh(geo_star, mat_gold);
+  goldlights[i].scale.set(0.3, 0.3, 0.3);
+  goldlights[i].castShadow = true;
+  goldlights[i].receiveShadow = true;
+  tree.add(goldlights[i]);
+}
+for (var i = 0; i < 9; i++) {
+  silverlights[i] = new THREE.Mesh(geo_star, mat_silver);
+  silverlights[i].scale.set(0.3, 0.3, 0.3);
+  silverlights[i].castShadow = true;
+  silverlights[i].receiveShadow = true;
+  tree.add(silverlights[i]);
+}
+
+silverlights[0].position.set(-2.2, 8.8, -1.1);
+goldlights[0].position.set(-1, 8.5, -1.4);
+silverlights[1].position.set(-0.9, 8.1, -2.5);
+goldlights[1].position.set(-1.8, 7.7, -3.3);
+silverlights[2].position.set(-3.1, 7.2, -3);
+goldlights[2].position.set(-3.5, 6.8, -1.8);
+silverlights[3].position.set(-2.9, 6.4, -0.7);
+goldlights[3].position.set(-1.5, 6.1, -0.3);
+silverlights[4].position.set(-0.2, 5.9, -1.4);
+goldlights[4].position.set(-0.25, 5.6, -2.8);
+silverlights[5].position.set(-1.2, 5.3, -3.9);
+goldlights[5].position.set(-2.9, 4.9, -3.6);
+silverlights[6].position.set(-3.8, 4.6, -2);
+goldlights[6].position.set(-3.2, 4.3, -0.5);
+silverlights[7].position.set(-1.2, 4, -0.1);
+goldlights[7].position.set(0.2, 3.8, -1.4);
+silverlights[8].position.set(0, 3.5, -3);
+goldlights[8].position.set(-0.9, 3.25, -4.3);
+
+tree.position.set(0, 0, -1);
+
+scene.add(tree);
+
 
 //-------------------------------------snowman-------------------------------------
 var snowman = new THREE.Group();
@@ -299,6 +351,18 @@ loader.load('./assets/fonts/Chango_Regular.json', (font) => {
 var render = function () {
   requestAnimationFrame(render);
   // orbitControls.update();
+  TWEEN.update();
   renderer.render(scene, camera);
+  // console.log(goldlights[0].material.color);
 };
-render();
+// tween();
+
+
+// function tween() {
+//   goldlights.forEach(e => {
+//     const target = e.material.color;
+//     var tween = TWEEN.Tween(target)
+//       .to({ mat_silver }, 100)
+//     tween.start();
+//   })
+// }
