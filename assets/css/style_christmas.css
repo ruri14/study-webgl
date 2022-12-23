@@ -4,17 +4,19 @@ body {
 }
 
 #playButton {
-  visibility: visible;
+  display: block;
   position: fixed;
   background-color: #fff;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   opacity: 1;
   transition: visibility 3s, opacity 3s;
   transition-delay: 1s;
+  z-index: 3;
 }
 #playButton::before {
-  content: "Click!";
+  content: "Tap or Click!";
   display: block;
   position: absolute;
   top: 50%;
@@ -34,8 +36,9 @@ div#smoke {
   position: fixed;
   bottom: 0;
   width: 100vw;
-  height: 30vh;
-  background-image: linear-gradient(rgba(211, 223, 221, 0) 0%, rgba(255, 255, 255, 0.8) 65%);
+  height: 35vh;
+  z-index: 1;
+  background-image: linear-gradient(rgba(211, 223, 221, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgb(255, 255, 255) 75%);
 }
 
 /*# sourceMappingURL=style_christmas.css.map */
