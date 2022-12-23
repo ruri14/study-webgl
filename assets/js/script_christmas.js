@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import * as TWEEN from '@tweenjs/tween.js';
 
 const playButton = document.querySelector('#playButton');
 
@@ -11,8 +10,8 @@ playButton.addEventListener('click', () => {
   setTimeout(() => { bgm.play(); bgm.loop = true; }, 2000);
   playButton.classList.add('is-open');
   render();
+  lightAnim1();
 }, false);
-
 
 // for convenience
 var pi = Math.PI;
@@ -92,22 +91,13 @@ scene.add(backLight);
 var mat_white = new THREE.MeshLambertMaterial({ color: 0xffffff });
 var mat_green = new THREE.MeshLambertMaterial({ color: 0x374028 });
 var mat_grey = new THREE.MeshLambertMaterial({ color: 0xf3f2f7 });
-var mat_yellow = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
 var mat_orange = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
 var mat_dark = new THREE.MeshLambertMaterial({ color: 0x4e3b2f });
 var mat_brown = new THREE.MeshLambertMaterial({ color: 0x4e3b2f });
 var mat_red = new THREE.MeshLambertMaterial({ color: 0x78383c });
+var mat_yellow = new THREE.MeshLambertMaterial({ color: 0xFEBE80 });
 var mat_gold = new THREE.MeshLambertMaterial({ color: 0xFEBE80 });
 var mat_silver = new THREE.MeshLambertMaterial({ color: 0xebedf1 });
-// var mat_white = new THREE.MeshLambertMaterial({ color: 0xffffff });
-// var mat_green = new THREE.MeshLambertMaterial({ color: 0x2D4628 });
-// var mat_grey = new THREE.MeshLambertMaterial({ color: 0xf3f2f7 });
-// var mat_yellow = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
-// var mat_orange = new THREE.MeshLambertMaterial({ color: 0xFEAE73 });
-// var mat_dark = new THREE.MeshLambertMaterial({ color: 0x696752 });
-// var mat_brown = new THREE.MeshLambertMaterial({ color: 0x696752 });
-// var mat_red = new THREE.MeshLambertMaterial({ color: 0x760007 });
-// var mat_gold = new THREE.MeshLambertMaterial({ color: 0xf2d299 });
 
 //-------------------------------------ground-------------------------------------
 var layers = [];
@@ -285,8 +275,6 @@ branch[2].position.set(0.15, 3.2, 3.5);
 scene.add(snowman);
 
 //-------------------------------------Texts-------------------------------------
-var present = new THREE.Group();
-
 const loader = new FontLoader();
 
 var text1 = ["M", "E", "R", "R", "Y"]
@@ -316,14 +304,8 @@ loader.load('./assets/fonts/Chango_Regular.json', (font) => {
       font: font,
       size: 0.8,
       height: 0.8,
-      // curveSegments: 12,
-      // bevelEnabled: true,
-      // bevelThickness: 10,
-      // bevelSize: 8,
-      // bevelOffset: 0,
-      // bevelSegments: 5
     });
-    mesh_text2[i] = new THREE.Mesh(geo_m, mat_gold);
+    mesh_text2[i] = new THREE.Mesh(geo_m, mat_yellow);
     mesh_text2[i].rotateY(pi / 2);
     mesh_text2[i].castShadow = true;
     scene.add(mesh_text2[i]);
@@ -355,20 +337,26 @@ loader.load('./assets/fonts/Chango_Regular.json', (font) => {
 
 //render
 var render = function () {
-  requestAnimationFrame(render);
+  window.requestAnimationFrame(render);
   // orbitControls.update();
-  TWEEN.update();
   renderer.render(scene, camera);
-  // console.log(goldlights[0].material.color);
 };
-// tween();
 
-
-// function tween() {
-//   goldlights.forEach(e => {
-//     const target = e.material.color;
-//     var tween = TWEEN.Tween(target)
-//       .to({ mat_silver }, 100)
-//     tween.start();
-//   })
-// }
+function lightAnim1() {
+  goldlights.forEach(e => {
+    e.material.color.setHex(0xebedf1);
+  });
+  silverlights.forEach(e => {
+    e.material.color.setHex(0xFEBE80);
+  });
+  setTimeout(() => { lightAnim2(); }, 1500);
+}
+function lightAnim2() {
+  silverlights.forEach(e => {
+    e.material.color.setHex(0xebedf1);
+  });
+  goldlights.forEach(e => {
+    e.material.color.setHex(0xFEBE80);
+  });
+  setTimeout(() => { lightAnim1(); }, 1500);
+}
