@@ -16,7 +16,7 @@ body {
   z-index: 3;
 }
 #playButton::before {
-  content: "Tap or Click!";
+  content: "Unmute Your Volume and Click to Enter!";
   display: block;
   position: absolute;
   top: 50%;

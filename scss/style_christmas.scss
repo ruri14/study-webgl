@@ -16,7 +16,7 @@ body {
   transition-delay: 1s;
   z-index: 3;
   &::before {
-    content: 'Tap or Click!';
+    content: 'Unmute Your Volume and Click to Enter!';
     display: block;
     position: absolute;
     top: 50%;
