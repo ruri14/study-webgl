@@ -7,8 +7,8 @@ import * as TWEEN from '@tweenjs/tween.js';
 const playButton = document.querySelector('#playButton');
 
 playButton.addEventListener('click', () => {
-  const soundBox = new Audio('./assets/sounds/star.mp3');
-  setTimeout(() => { soundBox.play(); }, 2000);
+  const bgm = new Audio('./assets/sounds/star.mp3');
+  setTimeout(() => { bgm.play(); bgm.loop = true; }, 2000);
   playButton.classList.add('is-open');
   render();
 }, false);
@@ -47,8 +47,13 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 //camera
-camera.position.set(25, 7, 0);
-camera.lookAt(new THREE.Vector3(0, 4, 0));
+if (window.innerHeight < window.innerWidth) {
+  camera.position.set(25, 4, 0);
+  camera.lookAt(new THREE.Vector3(0, 4, 0));
+} else {
+  camera.position.set(38, 8, 1);
+  camera.lookAt(new THREE.Vector3(0, 5, 0));
+}
 
 //lights, 3 point lighting
 var col_light = 0xffffff; // set
@@ -57,6 +62,7 @@ var light = new THREE.AmbientLight(col_light, 0.6);
 
 var keyLight = new THREE.DirectionalLight(col_light, 0.6);
 keyLight.position.set(30, 20, 10);
+
 
 keyLight.castShadow = true;
 keyLight.shadow.camera.top = 30;
@@ -124,10 +130,10 @@ layers[3].rotation.y = ((2 * pi) / 9) * 0.7;
 layers[4].scale.set(0.7, 1, 0.93);
 layers[4].rotation.y = ((2 * pi) / 9) * 0.9;
 
-var geo_base = new THREE.CylinderGeometry(8, 1, 10, 9);
+var geo_base = new THREE.CylinderGeometry(8, 0, 12, 9);
 var base = new THREE.Mesh(geo_base, mat_dark);
 base.scale.x = layers[0].scale.x;
-base.position.y = -5;
+base.position.y = -6;
 ground.add(base);
 
 scene.add(ground);
@@ -334,7 +340,7 @@ loader.load('./assets/fonts/Chango_Regular.json', (font) => {
   mesh_text2[0].position.set(3, 0.1, 5.5);
   mesh_text2[1].position.set(3.9, 0.2, 3.5);
   mesh_text1[2].scale.set(0.8, 0.8, 0.8);
-  mesh_text1[2].position.set(5, 0.2, 2.2);
+  mesh_text1[2].position.set(5, 0.1, 2.2);
   mesh_text2[3].position.set(3.7, 0.2, 1.2);
   mesh_text2[4].position.set(4.8, 0.1, 0.5);
   mesh_text2[4].position.set(4.8, 0.05, 0.5);
