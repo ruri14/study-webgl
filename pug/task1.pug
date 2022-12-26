@@ -1,0 +1,14 @@
+extend parts/_layout.pug
+
+append pagedata
+  - var title = "WebGL School Task 1"
+  - var date = "2022-12-26"
+
+append pagecss
+  link(rel='stylesheet' href="./assets/css/style_task1.css")
+
+append pagejs
+  script(src="./assets/js/script_task1.js" type="module")
+
+block main
+  canvas#webgl
