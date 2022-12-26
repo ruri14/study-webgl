@@ -23,6 +23,7 @@ var aspectRatio = w / h,
   fieldOfView = 45,
   nearPlane = 1,
   farPlane = 1000;
+var canvas = document.querySelector('#webgl');
 var camera = new THREE.PerspectiveCamera(
   fieldOfView,
   aspectRatio,
@@ -30,7 +31,7 @@ var camera = new THREE.PerspectiveCamera(
   farPlane
 );
 var renderer = new THREE.WebGLRenderer({
-  canvas: webgl,
+  canvas: canvas,
   alpha: true,
   antialias: true
 });
@@ -43,7 +44,6 @@ theCanvas.style.height = `${h}px`;
 
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-document.body.appendChild(renderer.domElement);
 
 //camera
 if (window.innerHeight < window.innerWidth) {
