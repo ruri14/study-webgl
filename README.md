@@ -1,5 +1,5 @@
 WebGLとThree.jsを勉強しています。   
-このリポジトリでは、勉強のために作った作品を公開しています。  
+このリポジトリには勉強のために作った作品をストックしています。  
 
 1. Perspective Camera vs Orthographic Camera  
 https://ruri14.github.io/webgl-study/perspectivevsorthographic  
