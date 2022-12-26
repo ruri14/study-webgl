@@ -1,4 +1,4 @@
-extend _layout.pug
+extend parts/_layout.pug
 
 append pagedata
   - var title = "Merry Christmas"
