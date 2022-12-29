@@ -12,22 +12,18 @@ html(lang="ja")
     link(rel="preconnect" href="https://fonts.googleapis.com")
     link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
     link(href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet")
-    link(rel='stylesheet' href="./assets/css/destyle.min.css")
-    link(rel='stylesheet' href="./assets/css/common.css")
+    link(rel='stylesheet' href="https://unpkg.com/destyle.css@3.0.2/destyle.min.css")
     block pagecss
     script(async src="https://ga.jspm.io/npm:es-module-shims@1.4.6/dist/es-module-shims.js")
     script(type="importmap").
       {
         "imports": {
-          "three": "./node_modules/three/build/three.module.js",
-          "three/addons/": "./node_modules/three/examples/jsm/",
-          "@tweenjs/tween.js": "./node_modules/@tweenjs/tween.js/dist/tween.esm.js"
+          "three": "../node_modules/three/build/three.module.js",
+          "three/addons/": "../node_modules/three/examples/jsm/",
+          "@tweenjs/tween.js": "../node_modules/@tweenjs/tween.js/dist/tween.esm.js"
         }
       }
     block pagejs
 
   body
-    //- include _nav
     block main
-    //- footer
-    //- include _footer.pug

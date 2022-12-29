@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&family=Roboto+Mono&display=swap");
+html, body {
+  font-family: "Roboto Mono", monospace;
+}
+
+body {
+  overflow: hidden;
+  background: #ebedf1;
+}
+
+#playButton {
+  display: block;
+  position: fixed;
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  opacity: 1;
+  transition: visibility 3s, opacity 3s;
+  transition-delay: 1s;
+  z-index: 3;
+}
+#playButton::before {
+  content: "Unmute Your Volume and Click to Enter!";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s;
+}
+#playButton.is-open {
+  visibility: hidden;
+  opacity: 0;
+}
+#playButton.is-open::before {
+  opacity: 0;
+}
+
+div#smoke {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 35vh;
+  z-index: 1;
+  background-image: linear-gradient(rgba(211, 223, 221, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgb(255, 255, 255) 75%);
+}
+
+/*# sourceMappingURL=style.css.map */
