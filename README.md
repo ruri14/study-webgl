@@ -2,13 +2,13 @@ WebGLとThree.jsを勉強しています。
 このリポジトリには勉強のために作った作品をストックしています。  
 
 1. Perspective Camera vs Orthographic Camera  
-https://ruri14.github.io/webgl-study/perspectivevsorthographic  
+https://ruri14.github.io/webgl-study/01_perspectivevsorthographic/  
 
 2. Happy Birthday  
-https://ruri14.github.io/webgl-study/happybirthday  
+https://ruri14.github.io/webgl-study/02_happybirthday/  
 
 3. Merry Christmas  
-https://ruri14.github.io/webgl-study/christmas  
+https://ruri14.github.io/webgl-study/03_merrychristmas/  
 
 4. RGB  
-https://ruri14.github.io/webgl-study/task1  
+https://ruri14.github.io/webgl-study/04_rgbcube/  
