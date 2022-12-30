@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&family=Roboto+Mono&display=swap');
+
+html,body {
+  font-family: 'Roboto Mono', monospace;
+}
+
+body{
+  overflow: hidden;
+  &::before {
+    content: "drag to rotate";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @media (orientation: landscape){
+      transform: translate(20vw,-25vh);
+    }
+    @media (orientation: portrait){
+      transform: translate(5vw,-30vh);
+    }
+  }
+}
