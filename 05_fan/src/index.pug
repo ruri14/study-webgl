@@ -11,4 +11,41 @@ append pagejs
   script(src="./dist/script.js" type="module")
 
 block main
-  canvas#webgl
+  .window
+    .window__header
+      picture
+        source(srcset="./dist/images/header_sp.png" media="(max-width: 500px)")
+        img(src="./dist/images/header.png")
+    .window__canvas
+      canvas#webgl
+    .window__filter
+      ul.filterList
+        li.filterList__item.js-filter(data-filter="Normal")
+          span.name Normal
+          img(src="./dist/images/filter_normal.png")
+        li.filterList__item.js-filter(data-filter="AdaptiveToneMapping")
+          span.name ATM
+          img(src="./dist/images/filter_atm.png")
+        li.filterList__item.js-filter(data-filter="DotScreen")
+          span.name DotScreen
+          img(src="./dist/images/filter_dotscreen.png")
+        li.filterList__item.js-filter(data-filter="Film")
+          span.name Film
+          img(src="./dist/images/filter_film.png")
+        li.filterList__item.js-filter(data-filter="Glitch")
+          span.name Glitch
+          img(src="./dist/images/filter_glitch.png")
+        li.filterList__item.js-filter(data-filter="Halftone")
+          span.name Halftone
+          img(src="./dist/images/filter_halftone.png")
+        //- li.filterList__item.js-filter(data-filter="UnrealBloom")
+        //-   span.name UnrealBloom
+        //-   img(src="./dist/images/dummy.png")
+    .window__footer
+      picture
+        source(srcset="./dist/images/footer_sp.png" media="(max-width: 500px)")
+        img(src="./dist/images/footer.png")
+  .note
+    p space key down to turn on the fan
+    p reload to clear filter
+    p ← click to add filter

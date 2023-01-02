@@ -24,6 +24,35 @@
     <script src="./dist/script.js" type="module"></script>
   </head>
   <body>
-    <canvas id="webgl"></canvas>
+    <div class="window">
+      <div class="window__header">
+        <picture>
+          <source srcset="./dist/images/header_sp.png" media="(max-width: 500px)"><img src="./dist/images/header.png">
+        </picture>
+      </div>
+      <div class="window__canvas">
+        <canvas id="webgl"></canvas>
+      </div>
+      <div class="window__filter">
+        <ul class="filterList">
+          <li class="filterList__item js-filter" data-filter="Normal"><span class="name">Normal</span><img src="./dist/images/filter_normal.png"></li>
+          <li class="filterList__item js-filter" data-filter="AdaptiveToneMapping"><span class="name">ATM</span><img src="./dist/images/filter_atm.png"></li>
+          <li class="filterList__item js-filter" data-filter="DotScreen"><span class="name">DotScreen</span><img src="./dist/images/filter_dotscreen.png"></li>
+          <li class="filterList__item js-filter" data-filter="Film"><span class="name">Film</span><img src="./dist/images/filter_film.png"></li>
+          <li class="filterList__item js-filter" data-filter="Glitch"><span class="name">Glitch</span><img src="./dist/images/filter_glitch.png"></li>
+          <li class="filterList__item js-filter" data-filter="Halftone"><span class="name">Halftone</span><img src="./dist/images/filter_halftone.png"></li>
+        </ul>
+      </div>
+      <div class="window__footer">
+        <picture>
+          <source srcset="./dist/images/footer_sp.png" media="(max-width: 500px)"><img src="./dist/images/footer.png">
+        </picture>
+      </div>
+    </div>
+    <div class="note">
+      <p>space key down to turn on the fan</p>
+      <p>reload to clear filter</p>
+      <p>← click to add filter</p>
+    </div>
   </body>
 </html>
