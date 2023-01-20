@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap");
+html, body {
+  font-family: "Shippori Mincho", serif;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+img {
+  width: 100%;
+}
+
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modalBg {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+}
+.modalBg.is-open {
+  visibility: visible;
+  opacity: 0.4;
+}
+
+.modal {
+  visibility: hidden;
+  position: fixed;
+  display: grid;
+  place-items: center;
+  margin: auto;
+  inset: 0;
+  width: 100%;
+  min-height: 400px;
+  max-height: 80vh;
+  height: 60vh;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+}
+.modal.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+.modal__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.modal__figure {
+  aspect-ratio: 3/2;
+  height: 40vh;
+  background: #eee;
+}
+.modal__figure img {
+  object-fit: cover;
+}
+.modal__content {
+  position: relative;
+  aspect-ratio: 1/1;
+  height: 40vh;
+  margin-left: 8vw;
+}
+.modal__content p {
+  position: absolute;
+  bottom: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.modal__close {
+  position: absolute;
+  top: 50%;
+  right: 10vw;
+  display: block;
+  padding: 7px;
+  transform: translate(0, -50%);
+  font-size: 16px;
+  pointer-events: auto;
+}
+
+#scroll {
+  width: 100%;
+  height: 300vh;
+}
+
+/*# sourceMappingURL=style.css.map */

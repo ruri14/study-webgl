@@ -7,8 +7,8 @@
   },
   "scripts": {
     "watch": "npm run watch:sass & npm run watch:pug",
-    "watch:sass": "sass --watch 01_perspectivevsorthographic/src/:01_perspectivevsorthographic/dist/ & sass --watch 02_happybirthday/src/:02_happybirthday/dist/ & sass --watch 03_merrychristmas/src/:03_merrychristmas/dist/ & sass --watch 04_rgbcube/src/:04_rgbcube/dist/ & sass --watch 05_fan/src/:05_fan/dist/",
-    "watch:pug": "pug 01_perspectivevsorthographic/src/ --out 01_perspectivevsorthographic/ --watch --pretty & pug 02_happybirthday/src/ --out 02_happybirthday/ --watch --pretty & pug 03_merrychristmas/src/ --out 03_merrychristmas/ --watch --pretty & pug 04_rgbcube/src/ --out 04_rgbcube/ --watch --pretty & pug 05_fan/src/ --out 05_fan/ --watch --pretty"
+    "watch:sass": "sass --watch 01_perspectivevsorthographic/src/:01_perspectivevsorthographic/dist/ & sass --watch 02_happybirthday/src/:02_happybirthday/dist/ & sass --watch 03_merrychristmas/src/:03_merrychristmas/dist/ & sass --watch 04_rgbcube/src/:04_rgbcube/dist/ & sass --watch 05_fan/src/:05_fan/dist/ & sass --watch 06_gallery/src/:06_gallery/dist/",
+    "watch:pug": "pug 01_perspectivevsorthographic/src/ --out 01_perspectivevsorthographic/ --watch --pretty & pug 02_happybirthday/src/ --out 02_happybirthday/ --watch --pretty & pug 03_merrychristmas/src/ --out 03_merrychristmas/ --watch --pretty & pug 04_rgbcube/src/ --out 04_rgbcube/ --watch --pretty & pug 05_fan/src/ --out 05_fan/ --watch --pretty & pug 06_gallery/src/ --out 06_gallery/ --watch --pretty"
   },
   "dependencies": {
     "@tweenjs/tween.js": "^18.6.4"

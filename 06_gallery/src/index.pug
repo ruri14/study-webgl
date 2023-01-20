@@ -1,0 +1,26 @@
+extend ../../pug/parts/_layout.pug
+
+append pagedata
+  - var title = "Gallery"
+  - var date = "2023-01"
+
+append pagecss
+  link(rel='stylesheet' href="./dist/style.css")
+
+append pagejs
+  script(src="./dist/script.js" type="module")
+
+block main
+  canvas#canvas
+  .modalBg
+  .modal
+    .modal__inner
+      .modal__figure
+      .modal__content
+        //- p Nikon F3
+        //-   br
+        //-   | AI Nikkor 50mm f1.4/S
+        //-   br
+        //-   | Kodak GOLD 200
+      button.modal__close.modalClose × Close
+  #scroll
